@@ -20,6 +20,7 @@ MCP-SERVER/
 ├── README.md                # Main repository documentation
 ├── PROJECT_ARCHITECTURE.md   # Current project architecture and context (for the AI)
 ├── requirements.txt         # Python package dependencies (fastapi, uvicorn, fastmcp)
+├── test_mcp.py              # Programmatic test script for the MCP server (No Node.js required)
 │
 ├── config/                  # Configuration directory (for the future generic architecture)
 │   └── settings.json        
