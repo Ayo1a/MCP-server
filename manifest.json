@@ -1,0 +1,19 @@
+{
+  "manifest_version": "0.3",
+  "name": "internal-system-bridge",
+  "version": "1.0.0",
+  "description": "MCP wrapper exposing internal Core API tools, generated dynamically from config/settings.json",
+  "author": {
+    "name": "Ayo1a"
+  },
+  "server": {
+    "type": "python",
+    "entry_point": "src/mcp_server/main.py",
+    "mcp_config": {
+      "command": "C:\\Users\\User\\Documents\\ליה\\final_project\\MCP-server\\venv\\Scripts\\python.exe",
+      "args": [
+        "${__dirname}/src/mcp_server/main.py"
+      ]
+    }
+  }
+}
