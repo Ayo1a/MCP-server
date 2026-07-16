@@ -1,0 +1,20 @@
+{
+  "server_name": "Generic System MCP Server",
+  "tools": [
+    {
+      "name": "fetch_system_text_report",
+      "description": "Fetches the latest internal system status report in markdown format. Use this when you need logs, uptime data, or infrastructure metrics.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/data/text"
+    },
+    {
+      "name": "fetch_system_image_metadata",
+      "description": "Fetches metadata for internal simulated image generation pipelines. Use this to inspect dimensions, formats, and mock URLs for rendering.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/data/image"
+    },
+    {
+      "name": "check_core_api_health",
+      "description": "Checks whether the internal Core API backend is running and reachable.",
+      "endpoint_url": "http://127.0.0.1:8000/"
+    }
+  ]
+}
