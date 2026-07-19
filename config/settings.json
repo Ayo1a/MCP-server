@@ -15,6 +15,85 @@
       "name": "check_core_api_health",
       "description": "Checks whether the internal Core API backend is running and reachable.",
       "endpoint_url": "http://127.0.0.1:8000/"
+    },
+    {
+      "name": "get_weather",
+      "description": "Gets the current weather and a 3-day forecast for any city. Returns nested data including temperature, humidity, wind, and daily highs/lows.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/weather/{city}",
+      "params": [
+        {"name": "city", "type": "string", "required": true, "in": "path"}
+      ]
+    },
+    {
+      "name": "search_users",
+      "description": "Searches the internal staff directory. Optionally filter by a free-text query (name/role/team) and/or an exact team name. Returns a list of matching users.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/users",
+      "params": [
+        {"name": "q", "type": "string", "required": false, "in": "query"},
+        {"name": "team", "type": "string", "required": false, "in": "query"},
+        {"name": "limit", "type": "integer", "required": false, "in": "query"}
+      ]
+    },
+    {
+      "name": "get_user",
+      "description": "Fetches one staff member by their id (e.g. u-1001). Returns an error if the id does not exist.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/users/{user_id}",
+      "params": [
+        {"name": "user_id", "type": "string", "required": true, "in": "path"}
+      ]
+    },
+    {
+      "name": "list_incidents",
+      "description": "Lists current operational incidents. Optionally filter by severity (low/medium/high/critical) and status (open/resolved). The list changes over time to simulate a live feed.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/incidents",
+      "params": [
+        {"name": "severity", "type": "string", "required": false, "in": "query"},
+        {"name": "status", "type": "string", "required": false, "in": "query"}
+      ]
+    },
+    {
+      "name": "get_service_metrics",
+      "description": "Returns a time-series of metrics for a named service. Choose window (1h/24h/7d) and metric (latency_ms/error_rate/rps). Includes min/max/avg summary and the raw datapoints for trend analysis.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/metrics/{service}",
+      "params": [
+        {"name": "service", "type": "string", "required": true, "in": "path"},
+        {"name": "window", "type": "string", "required": false, "in": "query"},
+        {"name": "metric", "type": "string", "required": false, "in": "query"}
+      ]
+    },
+    {
+      "name": "get_price",
+      "description": "Gets the latest simulated market price and 24h change for a ticker symbol (e.g. BTC, ETH, AAPL, NVDA). Prices move between calls.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/price",
+      "params": [
+        {"name": "symbol", "type": "string", "required": true, "in": "query"}
+      ]
+    },
+    {
+      "name": "get_sensor_reading",
+      "description": "Reads live telemetry for a warehouse IoT sensor by id, including temperature, humidity, battery, and any out-of-range alert.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/sensors/{sensor_id}",
+      "params": [
+        {"name": "sensor_id", "type": "string", "required": true, "in": "path"}
+      ]
+    },
+    {
+      "name": "call_flaky_service",
+      "description": "Calls an unreliable internal service that fails about 40% of the time with a 503 error. Useful for testing how you handle transient failures and retries.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/flaky"
+    },
+    {
+      "name": "call_slow_service",
+      "description": "Calls a deliberately slow endpoint that waits the given number of seconds before responding. Useful for testing timeouts.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/slow",
+      "params": [
+        {"name": "seconds", "type": "number", "required": false, "in": "query"}
+      ]
+    },
+    {
+      "name": "get_dev_joke",
+      "description": "Returns a random developer joke. A light-weight tool for testing plain-text responses.",
+      "endpoint_url": "http://127.0.0.1:8000/api/v1/joke"
     }
   ]
 }
