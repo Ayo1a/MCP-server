@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 
 import httpx  # library for building http requests in py
@@ -53,7 +54,15 @@ config = load_config()
 
 # The server's display name (what the AI/client sees) now comes from settings.json
 # instead of being a hardcoded string.
-mcp = FastMCP(config["server_name"])
+#
+# host/port only matter when running over HTTP (see MCP_TRANSPORT below) — they're
+# ignored for stdio. Default port is 9000, not 8000, since core_api_mock already
+# owns 8000.
+mcp = FastMCP(
+    config["server_name"],
+    host=os.getenv("MCP_HOST", "127.0.0.1"),
+    port=int(os.getenv("MCP_PORT", "9000")),
+)
 
 # Register one MCP tool per entry in settings.json — no hardcoded functions needed.
 # To add a new tool in the future: just add an entry to settings.json, no code changes here.
@@ -64,5 +73,12 @@ for tool_config in config["tools"]:
     mcp.tool(name=tool_config["name"], description=tool_config["description"])(fn)
 
 if __name__ == "__main__":
-    # Run using the standard MCP protocol over stdio (what Claude/the Inspector connect to).
-    mcp.run(transport="stdio")
+    # Transport is chosen at launch via MCP_TRANSPORT, so this one file can serve
+    # every kind of client without code changes:
+    #   stdio            (default) -> spawned as a local subprocess, e.g. Claude
+    #                                  Desktop or the MCP Inspector.
+    #   streamable-http             -> served over HTTP at http://<host>:<port>/mcp,
+    #                                  for clients that connect over the network
+    #                                  instead of spawning the server themselves.
+    transport = os.getenv("MCP_TRANSPORT", "stdio")
+    mcp.run(transport=transport)
