@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "internal-system-bridge": {
+      "url": "http://127.0.0.1:9000/mcp"
+    }
+  }
+}
