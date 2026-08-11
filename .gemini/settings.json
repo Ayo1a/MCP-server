@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "generic-system": {
+      "url": "http://127.0.0.1:9000/mcp",
+      "type": "http",
+      "description": "Generic System MCP Server (local)"
+    }
+  }
+}
