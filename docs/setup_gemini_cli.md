@@ -2,6 +2,22 @@
 
 Connects Gemini CLI to `mcp_server` over HTTP. Verified end-to-end: registered, connected, and confirmed all 3 tools callable.
 
+## Fast path: automated setup script
+
+The MCP server registration (`.gemini/settings.json`) is already committed in this repo, so the only thing a new user actually needs is a **Gemini API key** (free, from Google AI Studio). `scripts/setup_gemini_cli.py` handles the rest — it saves the key, marks this project folder as trusted (so the trust prompt never appears), and launches straight into a working `gemini` session:
+
+```
+venv\Scripts\python.exe scripts\setup_gemini_cli.py
+```
+
+Note: the first time you run this, `npx` may ask to install `@google/gemini-cli@0.58.0` (or similar) if it isn't cached yet — that's expected, just let it install.
+
+Requires `core_api_mock` and `mcp_server` (HTTP mode) already running — see step 1 below. This is a separate script from `scripts/setup_goose.py` (different tool, different config format, different env var) — don't mix them up.
+
+---
+
+The rest of this doc (steps 1–5) is the **manual** path this script replaces — useful for understanding what's happening under the hood, or if something about the script doesn't fit your setup.
+
 ## 1. Start the server side (two terminals)
 
 **Terminal 1 — mock backend:**
@@ -24,7 +40,7 @@ No persistent install needed — Gemini CLI runs fine via `npx`. From the projec
 ```
 npx -y @google/gemini-cli mcp add generic-system http://127.0.0.1:9000/mcp --transport http --description "Generic System MCP Server (local)"
 ```
-This is a one-time, non-interactive command — it just writes an entry to `.gemini/settings.json` (project-scoped, untracked by git):
+This is a one-time, non-interactive command — it just writes an entry to `.gemini/settings.json` (project-scoped, already committed in this repo):
 ```json
 {
   "mcpServers": {
