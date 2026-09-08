@@ -1,3 +1,5 @@
 fastapi
 uvicorn
-fastmcp
+mcp
+httpx
+pyyaml
