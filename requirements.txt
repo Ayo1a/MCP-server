@@ -3,3 +3,9 @@ uvicorn
 mcp
 httpx
 pyyaml
+llama-index-core
+llama-index-tools-mcp
+llama-index-llms-google-genai
+langchain-mcp-adapters
+langgraph
+langchain-google-genai
